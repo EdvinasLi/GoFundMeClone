@@ -109,7 +109,8 @@ export const ordersValidator = (req, res, next) => {
 export const donateValidator = (req, res, next) => {
     const schema = Joi.object({
         amount: Joi.number().required(),
-        storiesId: Joi.number().required()
+        storyId: Joi.number().required(),
+        donator: Joi.string().required()
     })
 
     validate(schema, req, res, next)

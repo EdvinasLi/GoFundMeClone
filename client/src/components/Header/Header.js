@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import MainContext from '../../context/MainContext'
 import axios from 'axios'
-import logo from './Logo.svg'
+
 import './Header.css'
 
 const Header = () => {
@@ -12,105 +12,58 @@ const Header = () => {
 
     const handleLogout = () => {
         axios.get('/api/users/logout/')
-        .then(resp => {
-            setUserInfo({})
-            setAlert({
-                message: resp.data,
-                status: 'success'
-            })
+            .then(resp => {
+                setUserInfo({})
+                setAlert({
+                    message: resp.data,
+                    status: 'success'
+                })
 
-            navigate('/')
-        })
+                navigate('/')
+            })
     }
 
     return (
-        <header className="p-3 text-bg-dark">
+        <header>
             <div className="container">
-            <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <img src={logo} alt="Beauty Parlor" style={{ maxWidth: '40px' }} />
-                    <div className="d-block ms-3 lh-1">
-                        <h6 className="mb-0">Lukio Bakšio</h6>
-                        <span className="text-uppercase fs-7 fw-semibold">Grožio salonų grupė</span>
-                    </div>
-                </a>
+                <span className="left">
+                    <input type="text" placeholder='Search' />
 
-                <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 ms-5 justify-content-center mb-md-0">
-                    <li>
-                        <Link 
-                        to="/" 
-                        className="nav-link px-2 nav-link-active"
+                </span>
+                <span className="middleLogo"><img src="https://imgs.search.brave.com/H7e2ekzcVwZ_8g0tLw3C_d6FejUmLGhGAhMJOD4rNwU/rs:fit:768:245:1/g:ce/aHR0cDovL2NuZ2Yu/b3JnL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDE5LzA2L0dvRnVu/ZE1lLUxvZ28tNzY4/eDI0NS5qcGc" alt="none" /></span>
+                <span className="right">
+                    <ul>
+                        <li> <Link
+                            to="/login"
                         >
-                            Salonai
-                        </Link>
-                    </li>
-                    <li>
-                        <Link 
-                        to="/workers" 
-                        className="nav-link px-2"
+                            Login
+                        </Link></li>
+                        <li> <Link
+                            to="/register"
                         >
-                            Darbuotojai
-                        </Link>
-                    </li>
-                    {userInfo.role === 0 && 
-                        <li>
-                            <Link 
-                            to="/orders" 
-                            className="nav-link px-2"
-                            >
-                                Užsakymai
-                            </Link>
-                        </li>
-                    }
-                    {userInfo.role === 1 &&
-                        <li>
-                            <Link 
-                            to="/admin" 
-                            className="nav-link px-2"
-                            >
-                                Administratorius
-                            </Link>
-                            <ul>
-                                <li>
-                                    <Link 
-                                        to="/admin/services/" 
-                                        className="nav-link px-2"
-                                        >
-                                            Paslaugos
-                                        </Link>
-                                </li>
-                                <li>
-                                    <Link 
-                                        to="/admin/workers" 
-                                        className="nav-link px-2"
-                                        >
-                                            Darbuotojai
-                                        </Link>
-                                </li>
-                                <li>
-                                    <Link 
-                                        to="/admin/orders" 
-                                        className="nav-link px-2"
-                                        >
-                                            Užsakymai
-                                        </Link>
-                                </li>
-                            </ul>
-                        </li>
-                    }
-                </ul>
+                            Register
+                        </Link></li>
+                        {userInfo.role === 0 &&
+                            <li>
+                                <Link
+                                    to="/orders"
+                                    className="nav-link px-2"
+                                >
+                                    Užsakymai
+                                </Link>
+                            </li>
+                        }{userInfo.role === 0 &&
+                            <li>
+                                <Link
+                                    to="/orders"
 
-                <div className="text-end">
-                    {userInfo.id ? 
-                        <button onClick={handleLogout} className="btn btn-primary">Atsijungti</button>
-                        :
-                        <>
-                            <Link to="/login" className="btn btn-outline-light me-2">Prisijungimas</Link>
-                            <Link to="/register" className="btn btn-primary">Registracija</Link>
-                        </>
-                    }
-                </div>
-            </div>
+                                >
+                                    New Campaign
+                                </Link>
+                            </li>
+                        }
+                    </ul>
+                </span>
             </div>
         </header>
     )

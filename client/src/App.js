@@ -1,25 +1,13 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import axios from 'axios'
-import Homepage from './Homepage'
-
-//Admino komponentai
-
-//Vartotojo komponentai
-
-
-//Autentifikacijos komponentai
-import Login from './pages/Login'
-import Register from './pages/Register'
-
-//Kontekstas
+import Homepage from './pages/Homepage'
 import MainContext from './context/MainContext'
-
-//Baziniai komponentai
 import Header from './components/Header/Header'
 import Alert from './components/Alert/Alert'
+import Login from './pages/login'
+import Register from './pages/register'
 import './App.css';
-
 const App = () => {
 
   const [alert, setAlert] = useState({
@@ -58,6 +46,8 @@ const App = () => {
 
               </>
             }
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
 
 
 
