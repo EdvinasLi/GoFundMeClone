@@ -5,7 +5,7 @@ import db from '../database/connect.js'
 
 const Router = express.Router()
 
-Router.post('/', auth, donateValidator, async (req, res) => {
+Router.post('/', auth, async (req, res) => {
     try {
 
         req.body.userId = req.session.user.id

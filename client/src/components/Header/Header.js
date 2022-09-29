@@ -55,10 +55,10 @@ const Header = () => {
                         }{userInfo.role === 0 &&
                             <li>
                                 <Link
-                                    to="/orders"
+                                    to="/logout"
 
                                 >
-                                    New Campaign
+                                    Logout
                                 </Link>
                             </li>
                         }

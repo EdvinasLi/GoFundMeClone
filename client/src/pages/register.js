@@ -42,19 +42,19 @@ const Register = () => {
             <form onSubmit={handleSubmit}>
                 <div className="form-group mb-2">
                     <label className="mb-1">Vardas:</label>
-                    <input type="text" name="first_name" className="form-control" onChange={handleForm} placeholder="Albertas" />
+                    <input type="text" name="first_name" className="form-control" onChange={handleForm} placeholder="vardas" />
                 </div>
                 <div className="form-group mb-2">
                     <label className="mb-1">Pavardė:</label>
-                    <input type="text" name="last_name" className="form-control" onChange={handleForm} placeholder="Čenkus" />
+                    <input type="text" name="last_name" className="form-control" onChange={handleForm} placeholder="pavarde" />
                 </div>
                 <div className="form-group mb-2">
                     <label className="mb-1">El. pašto adresas:</label>
-                    <input type="email" name="email" className="form-control" onChange={handleForm} placeholder="albertas.cenkus@gmail.com" />
+                    <input type="email" name="email" className="form-control" onChange={handleForm} placeholder="email" />
                 </div>
                 <div className="form-group mb-3">
                     <label className="mb-1">Slaptažodis:</label>
-                    <input type="password" name="password" className="form-control" onChange={handleForm} placeholder="albertasnoributiore" />
+                    <input type="password" name="password" className="form-control" onChange={handleForm} placeholder="password" />
                 </div>
                 <button className="btn btn-primary">Registruotis</button>
             </form>

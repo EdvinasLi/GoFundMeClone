@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -11,13 +11,8 @@ import axios from "axios";
 import "./homepage.css";
 
 const Home = (props) => {
+    const { id } = useParams();
     const { loggedIn } = props;
-    const [donate, setDonate] = useState({
-        amount: '',
-        storiesId: '',
-        donator: ''
-
-    })
     const [posts, setPosts] = useState([]);
     const [alert, setAlert] = useState({
         message: "",
@@ -26,6 +21,11 @@ const Home = (props) => {
     const [keyword, setKeyword] = useState("");
     const [refresh, setRefresh] = useState(false);
     const navigate = useNavigate();
+
+    const [form, setForm] = useState({
+        amount: '',
+        donator: '',
+    });
     useEffect(() => {
         axios.get("/api/stories/").then((resp) => {
             console.log(resp.data);
@@ -40,34 +40,32 @@ const Home = (props) => {
             setPosts(resp.data);
         });
     }, [refresh]);
+    const handleForm = (e, id) => {
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault()
 
-
-    const handleDonate = (e, id) => {
-
-        e.preventDefault();
-        axios.post("/api/donation", { donate, storyId: id }).then((resp) => {
-
-            if (resp.data.message) {
+        axios.post('/api/donation', { ...form, storyId: id })
+            .then(resp => {
                 setAlert({
-                    message: resp.data.message,
-                    status: "danger",
-                });
-                return;
-            }
-            setAlert({
-                message: resp.data.message,
-                status: "success",
-            });
-            setRefresh(!refresh);
-        });
-    };
-    const handleForm = (e) => {
-        setDonate({
-            ...donate,
-            [e.target.name]: e.target.value,
-        });
-    };
+                    message: resp.data,
+                    status: 'success'
+                })
 
+                navigate('/')
+            })
+            .catch(error => {
+                console.log(error)
+                setAlert({
+                    message: error.response.data,
+                    status: 'danger'
+                })
+
+                if (error.response.status === 401)
+                    navigate('/login')
+            })
+    }
 
     return (
 
@@ -101,9 +99,9 @@ const Home = (props) => {
                                 </CardContent>
                                 <CardActions>
 
-                                    <form onSubmit={(e) => handleDonate(e, article.id)}>
-                                        <input type='text' placeholder="Vardas" name="donator" onChange={(e) => handleForm(e)} />
-                                        <input type='text' placeholder="Suma" name='amount' onChange={(e) => handleForm(e)} />
+                                    <form onSubmit={handleSubmit}>
+                                        <input type='text' placeholder="Vardas" name="donator" onChange={handleForm} />
+                                        <input type='text' placeholder="Suma" name='amount' onChange={handleForm} />
                                         <button>Donate</button>
                                     </form>
                                 </CardActions>
